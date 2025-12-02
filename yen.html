@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #fcfcfc;
+            background-image: radial-gradient(#e5e7eb 0.5px, transparent 0.5px), radial-gradient(#e5e7eb 0.5px, #fcfcfc 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            scroll-behavior: smooth; 
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            height: 300px;
+            max-height: 400px;
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        
+        .resource-card.active {
+            border-color: #0d9488;
+            box-shadow: 0 0 0 4px #5eead4;
+            background-color: #f0fdfa;
+        }
+        
+        .fade-in {
+            opacity: 1;
+            transition: opacity 0.5s ease-in;
+        }
+        
+        .fade-out {
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .nav-link.active {
+            color: #0d9488;
+            font-weight: 700;
+            border-bottom: 3px solid #0d9488;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #1e3a8a, #0c4a6e);
+            color: white;
+            padding: 6rem 0;
+            box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .tile-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 30px -8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .section-module {
+            background-color: white;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-black text-gray-900 tracking-wider">OER<span class="text-teal-600">HUB</span></h1>
+            <nav class="hidden md:flex space-x-10 text-base font-medium text-gray-600">
+                <a href="#khai-thac" class="nav-link hover:text-teal-600 transition pb-2" data-target="khai-thac">TÌM KIẾM NGUỒN</a>
+                <a href="#cap-phep" class="nav-link hover:text-teal-600 transition pb-2" data-target="cap-phep">CHIẾN LƯỢC CẤP PHÉP</a>
+                <a href="#cau-truc" class="nav-link hover:text-teal-600 transition pb-2" data-target="cau-truc">TRIỂN KHAI WEBSITE</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero-section">
+        <section class="container mx-auto px-4 text-center space-y-4">
+            <p class="text-sm font-extrabold text-teal-300 uppercase tracking-widest">NỀN TẢNG TRI THỨC MỞ (OPEN EDUCATION RESOURCES)</p>
+            <h2 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight">
+                Xây dựng Kiến thức Mở <span class="text-teal-300">Không Giới Hạn</span>.
+            </h2>
+            <p class="text-xl text-gray-300 max-w-4xl mx-auto pt-4 leading-relaxed">
+                OERHUB là cổng thông tin giúp sinh viên Khám phá, Cấp phép và Triển khai Tài nguyên Giáo dục Mở (OER) theo chuẩn quốc tế, đảm bảo tính pháp lý và khả năng tái sử dụng. Bắt đầu hành trình sáng tạo của bạn ngay hôm nay.
+            </p>
+        </section>
+    </div>
+
+    <main class="container mx-auto px-4 py-16 space-y-24">
+
+        <section id="khai-thac" class="scroll-mt-20 section-module">
+            <div class="text-center mb-12">
+                <p class="text-teal-600 font-extrabold mb-2 text-lg">MODULE I</p>
+                <h2 class="text-4xl font-bold text-gray-900">🔍 Kho Tài Nguyên OER Toàn Cầu</h2>
+                <p class="text-gray-500 mt-3 max-w-3xl mx-auto">
+                    Việc khai thác tài nguyên hợp pháp là nền tảng cho bất kỳ dự án OER chuyên nghiệp nào. Hãy chọn loại tài nguyên bạn cần để xem các nguồn được khuyến nghị và quy tắc vàng về ghi công tác giả (Attribution Rule). Quy tắc này đảm bảo bạn sử dụng nội dung đúng phạm vi của giấy phép mở.
+                </p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Resource Selection Cards -->
+                <div class="lg:w-1/3 space-y-4">
+                    <div onclick="updateResourceView('text')" class="resource-card cursor-pointer w-full p-5 rounded-xl bg-white shadow-xl border border-gray-200 tile-hover flex items-center justify-between" data-type="text">
+                        <div class="flex items-center gap-4">
+                            <span class="text-3xl text-blue-600">📚</span>
+                            <span class="font-semibold text-lg text-gray-800">Tài liệu & Nghiên cứu</span>
+                        </div>
+                        <span class="text-gray-400 font-bold text-xl">→</span>
+                    </div>
+                    <div onclick="updateResourceView('image')" class="resource-card cursor-pointer w-full p-5 rounded-xl bg-white shadow-xl border border-gray-200 tile-hover flex items-center justify-between" data-type="image">
+                        <div class="flex items-center gap-4">
+                            <span class="text-3xl text-green-600">📷</span>
+                            <span class="font-semibold text-lg text-gray-800">Hình ảnh & Đồ họa</span>
+                        </div>
+                        <span class="text-gray-400 font-bold text-xl">→</span>
+                    </div>
+                    <div onclick="updateResourceView('audio')" class="resource-card cursor-pointer w-full p-5 rounded-xl bg-white shadow-xl border border-gray-200 tile-hover flex items-center justify-between" data-type="audio">
+                        <div class="flex items-center gap-4">
+                            <span class="text-3xl text-yellow-600">🎵</span>
+                            <span class="font-semibold text-lg text-gray-800">Âm thanh & Nhạc nền</span>
+                        </div>
+                        <span class="text-gray-400 font-bold text-xl">→</span>
+                    </div>
+                    <div onclick="updateResourceView('video')" class="resource-card cursor-pointer w-full p-5 rounded-xl bg-white shadow-xl border border-gray-200 tile-hover flex items-center justify-between" data-type="video">
+                        <div class="flex items-center gap-4">
+                            <span class="text-3xl text-red-600">🎥</span>
+                            <span class="font-semibold text-lg text-gray-800">Video & Tư liệu minh họa</span>
+                        </div>
+                        <span class="text-gray-400 font-bold text-xl">→</span>
+                    </div>
+                </div>
+
+                <!-- Discovery Result Panel -->
+                <div class="lg:w-2/3 bg-white rounded-2xl shadow-2xl p-8 border-t-8 border-teal-600 relative min-h-[450px]">
+                    <div id="resource-content" class="fade-in">
+                        <!-- Content Injected Here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cap-phep" class="scroll-mt-20 section-module">
+            <div class="text-center mb-12">
+                <p class="text-teal-600 font-extrabold mb-2 text-lg">MODULE II</p>
+                <h2 class="text-4xl font-bold text-gray-900">⚖️ Chiến lược Cấp phép: Quyền Hạn Nội Dung</h2>
+                <p class="text-gray-500 mt-3 max-w-4xl mx-auto">
+                    Việc lựa chọn giấy phép quyết định tương lai của nội dung bạn tạo. Biểu đồ dưới đây giúp bạn cân bằng giữa **Khả năng Lan tỏa (Lan rộng ảnh hưởng)** và **Quyền Kiểm soát (Bảo vệ tác phẩm gốc)**.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                
+                <!-- Feature Comparison Blocks -->
+                <div class="space-y-6">
+                    <div class="p-6 bg-teal-50 rounded-xl border-2 border-teal-300 cursor-pointer shadow-lg tile-hover" onclick="highlightLicense(0)">
+                        <div class="flex items-center gap-4 mb-3">
+                            <span class="text-4xl text-teal-700">🔓</span>
+                            <h3 class="font-bold text-xl text-teal-800">CC BY 4.0 (Tối đa Lan tỏa)</h3>
+                        </div>
+                        <p class="text-base text-gray-700">
+                            <strong>Mục đích:</strong> Tối ưu hóa việc chia sẻ và tái sử dụng toàn cầu. Phù hợp cho nội dung tổng hợp, muốn khuyến khích người khác phát triển tiếp.
+                            <br>Đây là giấy phép Mở nhất, giúp nội dung của bạn đạt được tầm ảnh hưởng tối đa trong cộng đồng OER toàn cầu.
+                        </p>
+                        <ul class="text-sm text-gray-600 mt-3 list-disc pl-5">
+                            <li><strong class="text-red-500">Yêu cầu duy nhất:</strong> Ghi công tác giả (Attribution) theo quy tắc TASL.</li>
+                            <li>Cho phép chỉnh sửa, thương mại hóa.</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-6 bg-blue-50 rounded-xl border-2 border-blue-300 cursor-pointer shadow-lg tile-hover" onclick="highlightLicense(1)">
+                        <div class="flex items-center gap-4 mb-3">
+                            <span class="text-4xl text-blue-700">🛡️</span>
+                            <h3 class="font-bold text-xl text-blue-800">CC BY-NC-ND 4.0 (Kiểm soát)</h3>
+                        </div>
+                        <p class="text-base text-gray-700">
+                            <strong>Mục đích:</strong> Bảo vệ tính nguyên bản và phi lợi nhuận cho sản phẩm tự tạo (ví dụ: video độc quyền của bạn).
+                            <br>Lựa chọn này đảm bảo nội dung không bị sửa đổi (ND) và không bị bán (NC), bảo toàn giá trị học thuật phi lợi nhuận của tác phẩm.
+                        </p>
+                        <ul class="text-sm text-gray-600 mt-3 list-disc pl-5">
+                            <li><strong class="text-red-500">Cấm:</strong> Thương mại (NC) và Tác phẩm Phái sinh (ND).</li>
+                            <li>Bảo vệ giọng nói, hình ảnh, phong cách cá nhân.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- License Comparison Chart -->
+                <div class="w-full flex justify-center">
+                    <div class="chart-container">
+                        <canvas id="licenseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cau-truc" class="scroll-mt-20 section-module">
+            <div class="text-center mb-12">
+                <p class="text-teal-600 font-extrabold mb-2 text-lg">MODULE III</p>
+                <h2 class="text-4xl font-bold text-gray-900">💻 Chiến Lược Triển Khai Trang Web OER</h2>
+                <p class="text-gray-500 mt-3 max-w-4xl mx-auto">
+                    Thiết kế cấu trúc Google Site không chỉ là sắp xếp nội dung mà còn là thể hiện sự minh bạch về giấy phép. Cấu trúc 4 trang này đảm bảo người dùng và công cụ tìm kiếm dễ dàng phân loại quyền tái sử dụng của từng tài nguyên, giúp dự án của bạn chuyên nghiệp và dễ quản lý.
+                </p>
+            </div>
+
+            <!-- Deployment Blueprint Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-b-4 border-gray-400 tile-hover cursor-pointer" onclick="showPageDetails('home')">
+                    <div class="text-4xl mb-3 text-center">🏠</div>
+                    <h3 class="font-bold text-center text-lg text-gray-900">Trang chủ (HOME)</h3>
+                    <p class="text-xs text-gray-500 text-center mt-1">Điểm khởi đầu và Tuyên bố Giấy phép chung.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-b-4 border-teal-500 tile-hover cursor-pointer" onclick="showPageDetails('ccby')">
+                    <div class="text-4xl mb-3 text-center">📖</div>
+                    <h3 class="font-bold text-center text-lg text-gray-900">Nội dung CC BY</h3>
+                    <p class="text-xs text-gray-500 text-center mt-1">Bài viết/Tóm tắt có thể chỉnh sửa và thương mại hóa.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-b-4 border-blue-500 tile-hover cursor-pointer" onclick="showPageDetails('ccncnd')">
+                    <div class="text-4xl mb-3 text-center">🎬</div>
+                    <h3 class="font-bold text-center text-lg text-gray-900">Nội dung CC BY-NC-ND</h3>
+                    <p class="text-xs text-gray-500 text-center mt-1">Video/Sản phẩm tự tạo, được bảo vệ bản quyền gốc.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-b-4 border-orange-500 tile-hover cursor-pointer" onclick="showPageDetails('ref')">
+                    <div class="text-4xl mb-3 text-center">📑</div>
+                    <h3 class="font-bold text-center text-lg text-gray-900">Tài liệu Tham khảo</h3>
+                    <p class="text-xs text-gray-500 text-center mt-1">Minh bạch nguồn gốc (TASL) cho các nội dung đã Khai thác.</p>
+                </div>
+            </div>
+
+            <!-- Detail Panel -->
+            <div id="page-detail-panel" class="mt-8 bg-white rounded-2xl shadow-2xl p-6 hidden fade-out border-l-4 border-teal-600">
+                <h3 id="detail-title" class="text-2xl font-bold text-gray-900 mb-4 border-b pb-2">Title</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-teal-600 text-sm uppercase mb-2">Mục tiêu Nội dung Chính</h4>
+                        <p id="detail-content" class="text-gray-700 text-base">Content</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-teal-600 text-sm uppercase mb-2">Quy tắc Cấp phép Bắt buộc</h4>
+                        <div id="detail-license" class="text-gray-700 bg-gray-100 p-4 rounded-lg text-sm">License info</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p class="font-medium">OERHUB | Nền tảng Hỗ trợ Sáng tạo Nội dung Mở</p>
+            <p class="text-sm text-gray-400 mt-2">© 2025 Creative Commons License Planning. All rights reserved. Designed for professional OER deployment.</p>
+        </div>
+    </footer>
+
+    <script>
+        const resourceData = {
+            text: {
+                title: "Tài liệu & Nghiên cứu Học thuật (Văn bản)",
+                sources: ["DOAB (Sách truy cập mở, Peer-reviewed)", "OpenStax (Giáo trình miễn phí, chất lượng cao)", "Wikipedia (CC BY-SA, cần chú ý tính chính xác)", "Tài liệu học thuật Open Access qua Google Scholar"],
+                rule: "Sử dụng để xây dựng kiến thức nền và trích dẫn. Luôn ghi công nguồn gốc chi tiết theo tiêu chuẩn TASL và tuân thủ giấy phép gốc (ví dụ: nếu là CC BY-SA, tác phẩm phái sinh phải là CC BY-SA).",
+                icon: "📚"
+            },
+            image: {
+                title: "Hình ảnh (Ảnh chụp / Vector / Biểu đồ)",
+                sources: ["Pexels, Unsplash, Pixabay (Royalty-free, check license)", "Google Images (Lọc theo Creative Commons License)", "Bộ sưu tập công cộng (Public Domain) từ Thư viện số"],
+                rule: "Kiểm tra kỹ giấy phép của từng ảnh. Hình ảnh dùng trong OER thường cần ghi công, ngay cả khi là Royalty-free. Cần tránh các logo thương mại trừ khi có giấy phép rõ ràng.",
+                icon: "📷"
+            },
+            audio: {
+                title: "Âm thanh & Nhạc nền (Audio)",
+                sources: ["ccMixter (CC Music)", "Musiopen (Cổ điển và nhạc không bản quyền)", "Free Music Archive (CC và Public Domain)", "Thư viện Âm thanh YouTube (Chủ yếu là CC BY hoặc Royalty-free)"],
+                rule: "Chú ý điều kiện Non-Commercial (NC) và ghi công (BY) để tránh tranh chấp bản quyền video. Âm thanh tự tạo là lựa chọn an toàn nhất.",
+                icon: "🎵"
+            },
+            video: {
+                title: "Video & Tư liệu minh họa (Video)",
+                sources: ["Vimeo (Lọc Creative Commons)", "YouTube (Lọc Creative Commons, chỉ sử dụng video có cấp phép CC)", "TED Talks (Một số nội dung là CC BY-NC-ND)"],
+                rule: "Nếu chèn clip người khác, phải tuân thủ nghiêm ngặt quy tắc 'Share Alike' (SA) hoặc 'No Derivatives' (ND) của nguồn gốc. Tốt nhất là sử dụng video của riêng bạn hoặc các clip rất ngắn (Fair Use/Fair Dealing).",
+                icon: "🎥"
+            }
+        };
+
+        const pageDetails = {
+            home: {
+                title: "1. Trang chủ (HOME) - Định Hướng",
+                content: "Trang đích (Landing Page) giới thiệu về dự án OER và chủ đề chính (ví dụ: 'Linux Equivalent'). Tạo ấn tượng mạnh về tính chuyên nghiệp và định hướng người dùng đến các mục nội dung chính. Phải có tóm tắt ngắn gọn về sứ mệnh của trang web.",
+                license: "Tuyên bố giấy phép chung cho toàn bộ trang web ở chân trang (Footer). Nếu không xác định, có thể chọn mặc định CC BY cho tính lan tỏa. Cần có lời kêu gọi hành động (Call to Action) rõ ràng."
+            },
+            ccby: {
+                title: "2. Nội dung CC BY (Mở Tối Đa) - Phát Triển",
+                content: "Chứa nội dung tổng hợp, các bài viết, danh sách, tóm tắt kiến thức. Mục đích là khuyến khích chỉnh sửa, phát triển, và thương mại hóa để mở rộng phạm vi tiếp cận của kiến thức.",
+                license: "⚠️ <strong>Giấy phép: CC BY 4.0</strong><br>Cần ghi công tác giả. Đây là giấy phép linh hoạt nhất cho sự lan tỏa. Nội dung này cần được trình bày rõ ràng có thể được tái sử dụng (Remix)."
+            },
+            ccncnd: {
+                title: "3. Nội dung CC BY-NC-ND (Độc quyền & Bảo vệ) - Bảo Tồn",
+                content: "Chứa video tự quay, các hướng dẫn cá nhân, sản phẩm độc đáo có giọng nói/hình ảnh của bạn. Bạn không muốn bị thương mại hóa hay cắt ghép, chỉnh sửa. Đây là nội dung giữ lại quyền kiểm soát cao nhất.",
+                license: "⛔ <strong>Giấy phép: CC BY-NC-ND 4.0</strong><br>Không thương mại (NC), không phái sinh (ND). Cần đặt cảnh báo rõ ràng về quyền tái sử dụng hạn chế này."
+            },
+            ref: {
+                title: "4. Tài liệu Tham khảo (REFERENCES) - Minh Bạch",
+                content: "Trang minh bạch nguồn gốc, thể hiện tính chuyên nghiệp và đạo đức học thuật. Liệt kê chi tiết T.A.S.L (Title, Author, Source, License) cho mọi tài nguyên đã sử dụng trong mục CC BY và CC BY-NC-ND (nếu có nguồn ngoài).",
+                license: "Tuân thủ quy tắc minh bạch nguồn gốc là yếu tố bắt buộc của mọi giấy phép Creative Commons. Không có trang tham khảo chi tiết, dự án không được coi là OER hợp pháp."
+            }
+        };
+
+        function updateResourceView(type) {
+            const data = resourceData[type];
+            const contentDiv = document.getElementById('resource-content');
+            const resourceCards = document.querySelectorAll('.resource-card');
+            
+            for (let i = 0; i < resourceCards.length; i++) {
+                if (resourceCards[i].dataset.type === type) {
+                    resourceCards[i].classList.add('active');
+                } else {
+                    resourceCards[i].classList.remove('active');
+                }
+            }
+
+            contentDiv.classList.remove('fade-in');
+            contentDiv.classList.add('fade-out');
+
+            setTimeout(() => {
+                let sourceListHtml = '';
+                for (let i = 0; i < data.sources.length; i++) {
+                    sourceListHtml += `<li class="text-base flex items-start gap-3 p-2 bg-gray-50 rounded-lg"><span class="text-teal-500 font-bold">✓</span>${data.sources[i]}</li>`;
+                }
+                
+                contentDiv.innerHTML = `
+                    <div class="p-2">
+                        <div class="flex items-center gap-4 mb-4 border-b pb-3">
+                            <span class="text-3xl">${data.icon}</span>
+                            <h3 class="text-2xl font-bold text-gray-900">${data.title}</h3>
+                        </div>
+                        <h4 class="font-bold text-teal-600 mb-3">CÁC KHO NGUỒN UY TÍN:</h4>
+                        <ul class="space-y-3 mb-6">
+                            ${sourceListHtml}
+                        </ul>
+                        <div class="mt-4 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+                            <h4 class="font-bold text-red-700 text-sm mb-1">🚨 QUAN TRỌNG: QUY TẮC SỬ DỤNG</h4>
+                            <p class="text-sm text-gray-700">${data.rule}</p>
+                        </div>
+                    </div>
+                `;
+                contentDiv.classList.remove('fade-out');
+                contentDiv.classList.add('fade-in');
+            }, 400); 
+        }
+
+        function showPageDetails(pageKey) {
+            const data = pageDetails[pageKey];
+            const panel = document.getElementById('page-detail-panel');
+            
+            if (!panel.classList.contains('hidden')) {
+                panel.classList.add('fade-out');
+            }
+
+            setTimeout(() => {
+                panel.classList.remove('hidden');
+                panel.classList.remove('fade-out');
+                
+                document.getElementById('detail-title').innerHTML = data.title;
+                document.getElementById('detail-content').innerHTML = data.content;
+                document.getElementById('detail-license').innerHTML = data.license;
+
+                panel.classList.add('fade-in');
+                panel.scrollIntoView({ block: 'center' }); // Removed smooth behavior
+            }, panel.classList.contains('hidden') ? 0 : 400); 
+        }
+
+        function highlightLicense(index) {
+            const chart = Chart.getChart("licenseChart");
+            
+            const opennessColors = ['rgba(20, 184, 166, 0.6)', 'rgba(20, 184, 166, 0.6)'];
+            const controlColors = ['rgba(245, 158, 11, 0.6)', 'rgba(245, 158, 11, 0.6)'];
+            const highlightColorOpenness = 'rgba(20, 184, 166, 0.9)';
+            const highlightColorControl = 'rgba(245, 158, 11, 0.9)';
+
+            opennessColors[index] = highlightColorOpenness;
+            controlColors[index] = highlightColorControl;
+            
+            chart.data.datasets[0].backgroundColor = opennessColors;
+            chart.data.datasets[1].backgroundColor = controlColors;
+            
+            chart.update();
+        }
+        
+        // Removed setActiveNav and scroll listener for student simplicity
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateResourceView('text');
+            // Removed scroll listener
+            
+            const ctx = document.getElementById('licenseChart').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['CC BY (Lan tỏa)', 'CC BY-NC-ND (Kiểm soát)'],
+                    datasets: [
+                        {
+                            label: 'Khả năng Lan tỏa (Openness)',
+                            data: [95, 30],
+                            backgroundColor: 'rgba(20, 184, 166, 0.6)',
+                            borderColor: 'rgba(20, 184, 166, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Quyền Kiểm soát (Control)',
+                            data: [10, 90],
+                            backgroundColor: 'rgba(245, 158, 11, 0.6)',
+                            borderColor: 'rgba(245, 158, 11, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'So sánh Đặc tính Giấy phép',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { display: false },
+                            title: {
+                                display: true,
+                                text: 'Mức độ (%)'
+                            }
+                        },
+                        y: {
+                            grid: { display: true, color: 'rgba(200, 200, 200, 0.2)' }
+                        }
+                    }
+                }
+            });
+            document.querySelector('.resource-card').click();
+        });
+
+    </script>
+</body>
+</html>
